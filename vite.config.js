@@ -1,38 +1,49 @@
-import { VitePWA } from 'vite-plugin-pwa';
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
+import { VitePWA } from "vite-plugin-pwa";
+import tailwindcss from "@tailwindcss/vite";
 
-import tailwindcss from '@tailwindcss/vite'
-
-// https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react(), tailwindcss(), VitePWA({
-    registerType: 'autoUpdate',
-    injectRegister: false,
+  base: "/Card-Track/", // ⭐ MOST IMPORTANT FOR GITHUB PAGES
 
-    pwaAssets: {
-      disabled: false,
-      config: true,
-    },
+  plugins: [
+    react(),
+    tailwindcss(),
+    VitePWA({
+      registerType: "autoUpdate",
+      injectRegister: false,
 
-    manifest: {
-      name: 'CardTrack',
-      short_name: 'CardTrack',
-      description: 'Manage Loans and Waleth',
-      theme_color: '#ffffff',
-    },
+      pwaAssets: {
+        disabled: false,
+        config: true,
+      },
 
-    workbox: {
-      globPatterns: ['**/*.{js,css,html,svg,png,ico}'],
-      cleanupOutdatedCaches: true,
-      clientsClaim: true,
-    },
+      manifest: {
+        name: "CardTrack",
+        short_name: "CardTrack",
+        description: "Manage Loans and Wallet",
+        theme_color: "#ffffff",
+        start_url: "/Card-Track/",
+        scope: "/Card-Track/",
+        display: "standalone",
+      },
 
-    devOptions: {
-      enabled: false,
-      navigateFallback: 'index.html',
-      suppressWarnings: true,
-      type: 'module',
-    },
-  })],
-})
+      workbox: {
+        globPatterns: ["**/*.{js,css,html,svg,png,ico}"],
+        cleanupOutdatedCaches: true,
+        clientsClaim: true,
+      },
+
+      devOptions: {
+        enabled: false,
+        navigateFallback: "index.html",
+        suppressWarnings: true,
+        type: "module",
+      },
+    }),
+  ],
+
+  build: {
+    outDir: "docs", // ⭐ REQUIRED because GitHub Pages uses /docs
+  },
+});
